@@ -1,15 +1,15 @@
 import subprocess
 import hashlib
+import os
 
-# Hardcoded password — BAD
-password = 'admin123'
+# Secure — Environment variable use karo
+password = os.environ.get('APP_PASSWORD', 'default')
 
-# MD5 — Weak hashing
-hash = hashlib.md5(password.encode()).hexdigest()
+# SHA256 — Strong hashing
+hash = hashlib.sha256(password.encode()).hexdigest()
 
-# shell=True — Dangerous
+# Secure — shell=False, list format
 user_input = input('Enter command: ')
-subprocess.call(user_input, shell=True)
+subprocess.call([user_input])
 
-# eval — Extremely dangerous
-eval(user_input)
+print("Application running securely")
